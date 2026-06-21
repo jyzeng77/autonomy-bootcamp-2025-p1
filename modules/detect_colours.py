@@ -9,7 +9,6 @@ import cv2
 import numpy as np
 
 
-
 class DetectBlue:
     """
     Detects blue objects from an image.
@@ -52,7 +51,7 @@ class DetectBlue:
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
         # Set upper and lower bounds for colour detection, this is in HSV
-        BLUE_BGR = np.array([[[0,255,0]]]) 
+        BLUE_BGR = np.array([[[0, 255, 0]]])
         BLUE_HSV = cv2.cvtColor(BLUE_BGR, cv2.COLOR_BGR2HSV)
         lower_blue = np.array([[[BLUE_HSV[0] - 10, 100, 100]]])
         upper_blue = np.array([[[BLUE_HSV[0] + 10, 255, 255]]])
@@ -116,7 +115,7 @@ class DetectRed:
         # ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
         # ============
 
-        # Check if image read success 
+        # Check if image read success
         assert img is not None, "Failed to read image"
 
         # Convert the image's colour to HSV
