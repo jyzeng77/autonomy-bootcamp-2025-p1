@@ -121,12 +121,12 @@ class DetectRed:
 
         # Set upper and lower bounds for colour detection, this is in HSV.
         # Shades of red spans two discontinuous parts of the range of HSV
-        # The shades which are 0 < hue < 90, we designate as "red"
-        lower_red = np.array([0, 100, 0], dtype=np.uint8)
-        upper_red = np.array([30, 255, 255], dtype=np.uint8)
-        # The shades which are 90 < hue < 180, we designate as "magenta"
-        lower_magenta = np.array([150, 100, 0], dtype=np.uint8)
-        upper_magenta = np.array([180, 255, 255], dtype=np.uint8)
+        # The shades which are 0 < hue < 10, we designate as "red"
+        lower_red = np.array([0, 100, 100], dtype=np.uint8)
+        upper_red = np.array([10, 255, 255], dtype=np.uint8)
+        # The shades which are 170 < hue < 179, we designate as "magenta"
+        lower_magenta = np.array([170, 100, 100], dtype=np.uint8)
+        upper_magenta = np.array([179, 255, 255], dtype=np.uint8)
 
         # Apply the threshold for the colour detection
         mask1 = cv2.inRange(hsv, lower_red, upper_red)
