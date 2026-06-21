@@ -50,17 +50,19 @@ class DetectBlue:
         # Convert the image's colour to HSV
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-        # Set upper and lower bounds for colour detection, this is in HSV
-        BLUE_BGR = np.array([[[0, 255, 0]]])
-        BLUE_HSV = cv2.cvtColor(BLUE_BGR, cv2.COLOR_BGR2HSV)
-        lower_blue = np.array([[[BLUE_HSV[0] - 10, 100, 100]]])
-        upper_blue = np.array([[[BLUE_HSV[0] + 10, 255, 255]]])
+        # Set upper and lower bounds for colour detection, this is in HSV.
+        blue_bgr = np.array([[[255, 0, 0]]], dtype=np.uint8)
+        blue_hsv = cv2.cvtColor(blue_bgr, cv2.COLOR_BGR2HSV)
+        blue_hue = int(blue_hsv[0, 0, 0])
+
+        lower_blue = np.array([blue_hue - 10, 100, 100], dtype=np.uint8)
+        upper_blue = np.array([blue_hue + 10, 255, 255], dtype=np.uint8)
 
         # Apply the threshold for the colour detection
         mask = cv2.inRange(hsv, lower_blue, upper_blue)
 
         # Shows the detected colour from the mask
-        res = cv2.bitwise_and(hsv, hsv, mask=mask)
+        res = cv2.bitwise_and(img, img, mask=mask)
 
         # ============
         # ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
@@ -121,11 +123,13 @@ class DetectRed:
         # Convert the image's colour to HSV
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-        # Set upper and lower bounds for colour detection, this is in HSV
-        RED_RGB = np.array([[[255, 0, 0]]])
-        RED_HSV = cv2.cvtColor(RED_RGB, cv2.COLOR_BGR2HSV)
-        lower_red = np.array([[[RED_HSV[0] - 10, 100, 100]]])
-        upper_red = np.array([[[RED_HSV[0] + 10, 255, 255]]])
+        # Set upper and lower bounds for colour detection, this is in HSV.
+        red_bgr = np.array([[[0, 0, 255]]], dtype=np.uint8)
+        red_hsv = cv2.cvtColor(red_bgr, cv2.COLOR_BGR2HSV)
+        red_hue = int(red_hsv[0, 0, 0])
+
+        lower_red = np.array([red_hue - 10, 100, 100], dtype=np.uint8)
+        upper_red = np.array([red_hue + 10, 255, 255], dtype=np.uint8)
 
         # Apply the threshold for the colour detection
         mask = cv2.inRange(hsv, lower_red, upper_red)
