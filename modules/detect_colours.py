@@ -8,9 +8,6 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-# Bootcampers remove the following lines:
-# Allow linters and formatters to pass for bootcamp maintainers
-# pylint: disable=unused-argument,unused-variable,used-before-assignment
 
 
 class DetectBlue:
@@ -48,18 +45,23 @@ class DetectBlue:
         # ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
         # ============
 
+        # Check if image read did not fail
+        assert img is not None, "Failed to load image"
+
         # Convert the image's colour to HSV
-        hsv = ...
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
         # Set upper and lower bounds for colour detection, this is in HSV
-        lower_blue = ...
-        upper_blue = ...
+        BLUE_BGR = np.array([[[0,255,0]]]) 
+        BLUE_HSV = cv2.cvtColor(BLUE_BGR, cv2.COLOR_BGR2HSV)
+        lower_blue = np.array([[[BLUE_HSV[0] - 10, 100, 100]]])
+        upper_blue = np.array([[[BLUE_HSV[0] + 10, 255, 255]]])
 
         # Apply the threshold for the colour detection
-        mask = ...
+        mask = cv2.inRange(hsv, lower_blue, upper_blue)
 
         # Shows the detected colour from the mask
-        res = ...
+        res = cv2.bitwise_and(hsv, hsv, mask=mask)
 
         # ============
         # ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
@@ -73,7 +75,7 @@ class DetectBlue:
         cv2.imwrite(str(output_path), img)
 
         # Show res to see the result of what is being filtered in the colour detection
-        # cv2.imwrite(str(output_path), res)
+        cv2.imwrite(str(output_path), res)
 
         # This parameter is needed to run tests
         return mask if return_mask else None
